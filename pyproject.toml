@@ -1,0 +1,45 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "wo-fouling"
+version = "0.1.0"
+description = "Williams-Otto reactor with cooling-water CaCO3 fouling — Python port of joaoplcoutinho/wo_fouling_simulator. Joint work of Joel Sansana and João Coutinho (CIEPQPF, Coimbra, 2021)."
+readme = "README.md"
+requires-python = ">=3.10"
+license = {text = "GPL-3.0-or-later"}
+authors = [
+    {name = "Joel Sansana", email = "joel@eq.uc.pt"},
+    {name = "João Coutinho", email = "joao.coutinho.94@gmail.com"},
+]
+dependencies = [
+    "numpy>=1.24",
+    "numba>=0.58",
+    "scipy>=1.11",
+]
+
+[project.optional-dependencies]
+test = [
+    "pytest>=8.0",
+]
+
+[tool.setuptools.packages.find]
+include = ["wo_fouling*"]
+exclude = ["tests*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 100
+
+[tool.ruff.lint]
+# E701/E702: multiple statements per line — we deliberately mirror the
+# upstream MATLAB one-line if-blocks in the ported RHS for side-by-side
+# readability against dynmodel.m. Suppressing these keeps the port diff
+# small.
+ignore = [
+    "E701",
+    "E702",
+]
