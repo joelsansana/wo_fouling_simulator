@@ -243,12 +243,13 @@ def _dynmodel_kernel(
         )
 
     # ----------------------------------------- integrated heat (trapz on -dT)
-    # MATLAB: Qcool = UpDcoil * dz * trapz(-dT)  (unit spacing).
+    # MATLAB: Qcool = UpDcoil * dz * trapz(-dT)  (unit spacing, NEGATED dT:
+    # positive dT = reactor hotter than coil = Qcool negative = cooling).
     # np.trapz was removed in NumPy 2.0 and np.trapezoid is not Numba-typed,
     # so the trapezoid rule is written out explicitly. Identical arithmetic.
     neg_dT_sum = 0.0
     for i in range(n - 1):
-        neg_dT_sum += 0.5 * ((Tr - Tc[i]) + (Tr - Tc[i + 1]))
+        neg_dT_sum += 0.5 * ((Tc[i] - Tr) + (Tc[i + 1] - Tr))
     Qcool = UpDcoil * dz * neg_dT_sum
 
     # ----------------------------------------- reactor energy balance
