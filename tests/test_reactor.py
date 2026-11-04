@@ -16,10 +16,10 @@ These tests verify three things:
    Heat input (TA > Tr) drives Tr *up*.
 
 What these tests *do not* check is bit-for-bit equivalence with the MATLAB
-``dynmodel.m`` outputs — that needs the upstream ``model_ic.mat`` fixture
-(see docs/AUDIT.md §8). This suite provides the smoke coverage sufficient
-to merge Steps 2 + 3 of the build order; the validation-grade fixture
-comparison is the next step.
+``dynmodel.m`` outputs — that needs a MATLAB re-run against the upstream
+``model_ic.mat`` fixture (now at ``tests/fixtures/model_ic.mat``; see
+PORT_NOTES.md §3). The validation-grade comparison lives in
+``tests/test_pipeline.py`` (golden ``sim_results.mat`` corroboration).
 """
 
 from __future__ import annotations
@@ -54,7 +54,8 @@ def _make_reactor(n: int | None = None) -> OpenLoopReactor:
 # -----------------------------------------------------------------------------
 
 class TestStateLayout:
-    """The state-vector layout must match docs/AUDIT.md §2.5."""
+    """The state-vector layout must match the documented layout
+    (``reactor.py`` docstring; see PORT_NOTES.md §2)."""
 
     def test_state_length_default(self):
         reactor = _make_reactor()
@@ -66,8 +67,9 @@ class TestStateLayout:
         assert reactor.state_length() == 8 + 20
 
     def test_state_length_audit_default(self):
-        """The AUDIT cites 211 = 11 + 200 cells for the closed-loop chart.
-        The open-loop default is n = 200 ⇒ 208 entries."""
+        """The prior audit cited 211 = 11 + 200 cells for the closed-loop
+        chart (see PORT_NOTES.md §4); the open-loop default n = 200 gives
+        208 entries."""
         reactor = _make_reactor(n=200)
         assert reactor.state_length() == 208
 

@@ -6,7 +6,7 @@ reactor with cooling-water CaCO3 fouling kinetics from Souza & Costa (2019).
 
 Authorship and origin: Joel Sansana and João Coutinho (CIEPQPF, Coimbra, 2021).
 Original .m files joint-authored with José Granjo (CERENA, IST, ULisboa).
-See docs/AUDIT.md for the architecture, validation contract, and build order.
+See PORT_NOTES.md for the source mapping, subsystem verdicts, and validation contract.
 """
 
 from __future__ import annotations

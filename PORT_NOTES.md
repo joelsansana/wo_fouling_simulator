@@ -1,15 +1,18 @@
 # PORT_NOTES — wo_fouling Python port of the MATLAB/Simulink apparatus
 
 Port executed 2026-11-03/04 by Joel Sansana (with Hermes agent support),
-branch `feature/audit-and-python-port`. MATLAB tree is READ-ONLY (untouched,
-`git diff` against the baseline commit shows no changes under
-`model_matlab_open_loop/`, `model_simulink_closed_loop/`,
-`simple_fouling_tube_sim/`).
+branch `feature/audit-and-python-port`. The MATLAB tree was transcribed
+without modification during the port and has since been **removed from the
+working tree** (phased out on this branch once the port was validated); the
+originals remain retrievable in git history at the baseline commit
+`4ba7d4b` and from the upstream repository.
 
-`docs/AUDIT.md` (2026-07-20, Eusébio) was treated as **additional
-information only**. Every claim used below was re-verified against the
-actual `.m` sources and the extracted `.slx` XML; discrepancies are listed
-in §4. Where this document and the audit disagree, this document wins.
+The prior code audit (2026-07-20, Eusébio) was treated as **additional
+information only**; it was removed together with the MATLAB tree and is
+recoverable from git history. Every claim used below was re-verified
+against the actual `.m` sources and the extracted `.slx` XML; discrepancies
+are listed in §4. Where this document and the audit disagree, this document
+wins.
 
 ---
 

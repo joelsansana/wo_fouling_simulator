@@ -18,8 +18,8 @@ from wo_fouling.clustering import ward_two_clusters, clustering_pipeline
 from wo_fouling.matio import load_sim_results, load_model_ic
 
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-SIM_RESULTS = os.path.join(REPO, "model_simulink_closed_loop", "sim_results.mat")
-MODEL_IC = os.path.join(REPO, "model_matlab_open_loop", "model_ic.mat")
+SIM_RESULTS = os.path.join(REPO, "tests", "fixtures", "sim_results.mat")
+MODEL_IC = os.path.join(REPO, "tests", "fixtures", "model_ic.mat")
 
 h5py = pytest.importorskip("h5py", reason="h5py not installed")
 

@@ -4,8 +4,8 @@ Port of ``model_matlab_open_loop/dynmodel.m``.
 
 This module exposes the right-hand side ``f(t, x, u, par) -> dx/dt`` for
 the open-loop Williams-Otto reactor with a discretised cooling coil. It is
-a faithful line-by-line port of the upstream MATLAB; see docs/AUDIT.md for
-the architecture, gotchas, and validation contract.
+a faithful line-by-line port of the upstream MATLAB; see PORT_NOTES.md
+for the source mapping, gotchas, and validation contract.
 
 State vector layout (length ``11 + N`` where ``N = par.n``):
 

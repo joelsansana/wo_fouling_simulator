@@ -148,12 +148,14 @@ class TestReactionHeat:
 
 
 class TestParityWithAudit:
-    """Cross-checks against the values documented in docs/AUDIT.md §1.1."""
+    """Cross-checks against the values documented in the prior audit
+    (removed with the MATLAB phase-out; see PORT_NOTES.md §4)."""
 
     def test_arrhenius_factors_audit(self):
-        """A1..A3 and Ea1..Ea3 are the values cited in AUDIT §1.1."""
+        """A1..A3 and Ea1..Ea3 are the values cited in the prior audit's
+        physics walkthrough (git history)."""
         par = default_parameters()
-        # These exact numbers appear in the AUDIT physics walkthrough.
+        # These exact numbers appear in the prior audit's physics walkthrough.
         assert par.A1 == pytest.approx(1.6599e6)
         assert par.A2 == pytest.approx(7.2117e8)
         assert par.A3 == pytest.approx(2.6745e12)

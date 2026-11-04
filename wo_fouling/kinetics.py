@@ -9,14 +9,14 @@ the resulting mass-basis reaction rates for the WO reactor:
 
 The mass-basis rate ``rjmr`` (kg/s of reaction progress) is what the material
 balances consume. The convention matches ``dynmodel.m`` and ``dynmodel_fouling.m``
-in the upstream MATLAB reference bit-for-bit (see docs/AUDIT.md §1.1, §5).
+in the upstream MATLAB reference bit-for-bit (see PORT_NOTES.md §2 and §3).
 
 Note on units:
     ``Ea1..Ea3`` in the upstream ``modelparameters.m`` are in **K** (not J/mol),
     and ``Rgas`` is **1.987204... cal/(K mol)**, so the dimensionless
     ``Ea / (Rgas * T)`` group that appears in the upstream code is already
     dimensionless as the K and cal/(K mol) cancel. We follow the upstream
-    convention verbatim — do not "fix" the units. See AUDIT §5.3.
+    convention verbatim — do not "fix" the units (see PORT_NOTES.md §2).
 """
 
 from __future__ import annotations

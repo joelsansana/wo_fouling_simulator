@@ -8,15 +8,15 @@ João Coutinho, Joel Sansana (CIEPQPF, U. Coimbra), José F.O. Granjo
 (CERENA, IST). Fouling kinetics from Souza & Costa, *Chem Eng Res Des*
 121, 15-31, 2019.
 
-The MATLAB/Simulink sources are kept in this repository **read-only**
-(`model_matlab_open_loop/`, `model_simulink_closed_loop/`,
-`simple_fouling_tube_sim/`). Everything under `wo_fouling/` is the port.
+The original MATLAB/Simulink sources were phased out of the working tree on
+this branch (retrievable from git history, baseline commit `4ba7d4b`, and
+from the upstream repository). Everything under `wo_fouling/` is the port.
 
 **Read [PORT_NOTES.md](PORT_NOTES.md) first** — it maps every MATLAB
 subsystem to its Python counterpart with a VERIFIED / TRANSCRIBED /
 RECONSTRUCTED verdict, lists all port substitutions and their risks,
 documents the validation against the collected `sim_results.mat`, and
-records where the prior code audit (docs/AUDIT.md) was wrong.
+records where the prior code audit was wrong (§4).
 
 ## Install
 
@@ -88,9 +88,8 @@ items).
 wo_fouling/            the port (parameters, kinetics, reactor, fouling,
                        tube, steady_state, controllers, closed_loop,
                        kpi, clustering, ol_sysid, matio, sim)
-tests/                 96 tests incl. golden-data tests
-model_*/               original MATLAB/Simulink (READ-ONLY)
-docs/AUDIT.md          prior audit (treated as hints only; see PORT_NOTES §4)
+tests/                 96 tests incl. golden-data tests (reference .mat
+                       recordings in tests/fixtures/)
 PORT_NOTES.md          port record: mapping, verdicts, tolerances, risks
 ```
 
