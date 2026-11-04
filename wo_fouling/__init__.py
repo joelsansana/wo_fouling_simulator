@@ -21,6 +21,7 @@ from .tube import TubeSimulator, tubo_fouling
 from .steady_state import solve_open_loop_ss, solve_closed_loop_ss
 from .controllers import DiscretePID, relay_autotune, tyreus_luyben_pid, amigo_pid
 from .closed_loop import ClosedLoopSimulator, ClosedLoopConfig
+from . import sim, kpi, clustering, ol_sysid, matio  # noqa: F401
 
 __all__ = [
     "WoParameters",

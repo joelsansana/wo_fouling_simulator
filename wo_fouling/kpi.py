@@ -57,7 +57,9 @@ def ewma_filter(kpi: np.ndarray, alpha: float = 0.01,
 
 
 def scale_by_max(x: np.ndarray) -> np.ndarray:
-    return np.asarray(x, dtype=float) / np.max(np.asarray(x, dtype=float))
+    """x/max(x) — MATLAB parity: all-zero input gives NaN (0/0)."""
+    with np.errstate(divide="ignore", invalid="ignore"):
+        return np.asarray(x, dtype=float) / np.max(np.asarray(x, dtype=float))
 
 
 def spearman(x, y) -> float:
