@@ -153,5 +153,3 @@ docs/architecture.md        module-by-module map, data flow, test coverage
 PORT_NOTES.md               port record: mapping, verdicts, tolerances, risks
 WO_fouling_simulator.pptx   original project presentation (kept as-is)
 ```
-
-License: GPL-3.0-or-later (matches the original work's licensing intent).
