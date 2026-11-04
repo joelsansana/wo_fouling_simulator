@@ -139,7 +139,7 @@ def reaction_heat(
 
     The stoichiometric multipliers (2, 3, 1.5) come from the per-reaction
     ``DeltaH`` references (per kg A consumed, per kg B consumed, per kg C
-    consumed — see AUDIT §1.1). They are not the reaction stoichiometric
+    consumed — see PORT_NOTES.md §2). They are not the reaction stoichiometric
     coefficients themselves; they are the molar-mass ratios between the
     reference species and the heat-of-reaction basis (kJ/kg-X * kg-X/s = kJ/s
     = kW).

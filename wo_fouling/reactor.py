@@ -22,7 +22,7 @@ State vector layout (length ``11 + N`` where ``N = par.n``):
 Note: the upstream ``sim_main.m`` declares ``M(1,1) = 0`` (mass matrix),
 turning the first equation (level) into an algebraic constraint. The RHS
 still produces a value for ``dx/dt[0]`` — the constraint is enforced by
-the integrator, not by us. See AUDIT §2.5.
+the integrator, not by us. See PORT_NOTES.md §5.
 
 Input vector (length 7):
 
