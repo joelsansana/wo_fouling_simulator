@@ -145,8 +145,10 @@ def _dynmodel_kernel(
     mg = x[5]
     mp = x[6]
     Tr = x[7]
-    # Tc is the trailing slice — view, not copy, to avoid an alloc per call.
-    Tc = x[8:8 + n]
+    # Tc as a COPY, not a view: dynmodel.m has MATLAB value semantics —
+    # writing Tc(1) = Tcin inside the RHS must NOT leak into the caller's
+    # state vector (a view here would corrupt the integrator's y).
+    Tc = x[8:8 + n].copy()
 
     # Sanity-clamp negatives (matches the upstream warnings in dynmodel.m,
     # but we don't emit warnings; the integrator never sees the originals).
@@ -158,7 +160,7 @@ def _dynmodel_kernel(
     if me < 0.0: me = 0.0
     if mg < 0.0: mg = 0.0
     if mp < 0.0: mp = 0.0
-    # Clamp negative Tc cells to 0 in place.
+    # Clamp negative Tc cells to 0.
     for i in range(n):
         if Tc[i] < 0.0:
             Tc[i] = 0.0
@@ -241,9 +243,13 @@ def _dynmodel_kernel(
         )
 
     # ----------------------------------------- integrated heat (trapz on -dT)
-    # trapz(-dT) with unit spacing in z (after the dz scaling).
-    # numpy.trapz on a 1-D array — equivalent to MATLAB's trapz.
-    Qcool = UpDcoil * dz * np.trapz(-dT)
+    # MATLAB: Qcool = UpDcoil * dz * trapz(-dT)  (unit spacing).
+    # np.trapz was removed in NumPy 2.0 and np.trapezoid is not Numba-typed,
+    # so the trapezoid rule is written out explicitly. Identical arithmetic.
+    neg_dT_sum = 0.0
+    for i in range(n - 1):
+        neg_dT_sum += 0.5 * ((Tr - Tc[i]) + (Tr - Tc[i + 1]))
+    Qcool = UpDcoil * dz * neg_dT_sum
 
     # ----------------------------------------- reactor energy balance
     Qrmr = (

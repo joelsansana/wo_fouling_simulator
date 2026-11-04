@@ -1,9 +1,20 @@
 """
 WO reactor parameters — port of ``modelparameters.m``.
 
-The defaults reproduce exactly the values from the upstream ``modelparameters.m``
-(open-loop and closed-loop versions are bit-identical except for the closed-loop
-alias ``MR = par.massT`` which we ignore — see docs/AUDIT.md §5.1).
+IMPORTANT (verified 2026-11-03 against both .m sources): the two upstream
+``modelparameters.m`` files are NOT identical. They differ in exactly four
+values:
+
+    quantity    model_matlab_open_loop   model_simulink_closed_loop
+    ---------   -----------------------   ---------------------------
+    psi         1.0                       2.5
+    massT       2105.2 kg                 2105.0 kg
+    n           2000                      200
+    (extra)     pin = 50e5 Pa (unused)    par.Vr stored in struct
+
+``default_parameters()`` keeps the closed-loop loadout (psi=2.5, massT=2105,
+n=200) for backwards compatibility with the existing tests; use
+``open_loop_parameters()`` / ``closed_loop_parameters()`` to be explicit.
 
 References:
 [1] TJ Williams, RE Otto, Trans Amer IEE,
@@ -11,6 +22,7 @@ References:
 [3] ARC Souza, ALH Costa, Chem Eng Res Des 121, 15-31, 2019.  -- fouling kinetics
 [5] L Cresmaschi, X Wu, Heat Transfer Engineering 36, 663-675, 2015.  -- psi
 """
+
 
 from __future__ import annotations
 
@@ -289,7 +301,32 @@ class WoParameters:
 
 def default_parameters() -> WoParameters:
     """Return WoParameters() with upstream defaults. Equivalent to
-    ``[par, massT, Vr] = modelparameters()`` in the MATLAB reference."""
+    ``[par, massT, Vr] = modelparameters()`` in the MATLAB reference.
+
+    Note: this is the CLOSED-LOOP loadout (psi=2.5, massT=2105, n=200),
+    matching ``model_simulink_closed_loop/modelparameters.m``.
+    """
+    return WoParameters()
+
+
+def open_loop_parameters() -> WoParameters:
+    """Parameter set matching ``model_matlab_open_loop/modelparameters.m``.
+
+    Differences vs the closed-loop set: psi=1.0, massT=2105.2, n=2000.
+    """
+    return WoParameters(
+        geometry=Geometry(massT=2105.2, n=2000),
+        fouling=FoulingChemistry(psi=1.0),
+    )
+
+
+def closed_loop_parameters() -> WoParameters:
+    """Parameter set matching ``model_simulink_closed_loop/modelparameters.m``.
+
+    Differences vs the open-loop set: psi=2.5, massT=2105.0, n=200.
+    Also matches the 31-element ``model_parameters`` constant embedded in
+    ``WO_reactor_model.slx`` (verified element-by-element, 2026-11-03).
+    """
     return WoParameters()
 
 

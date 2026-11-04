@@ -265,10 +265,20 @@ class TestEnergyDirection:
 
     def test_cold_inlet_drives_tr_down(self):
         """Cold inlet (TA < Tr) drives Tr down — but only when reactions are
-        negligible. We hold Tr low and feed only A and B with no C/P, so
-        reactions are zero and the inlet-stream heat sink dominates."""
-        reactor = _make_reactor(n=5)
-        # Cold inlets, hot reactor, no C/P (so reactions don't fire).
+        negligible. With the REAL Arrhenius kinetics a 400 kg holdup of pure
+        A+B at 350 K releases ~460 kW (r1 fires without any C/P present) and
+        the reactor runs away thermally — the premise only holds with the
+        kinetics switched off, so this fixture pins A1..A3 to ~zero and tests
+        exactly what the docstring claims: the inlet-stream energy balance.
+        (Fixture corrected 2026-11-03; the assertion itself is unchanged.)
+        """
+        from wo_fouling.parameters import Geometry, ReactionKinetics, WoParameters
+        par = WoParameters(
+            geometry=Geometry(n=5),
+            kinetics=ReactionKinetics(A1=1e-300, A2=1e-300, A3=1e-300),
+        )
+        reactor = OpenLoopReactor(par)
+        # Cold inlets, hot reactor, no reactions.
         u = np.array([0.5, 0.5, 250.0, 250.0, 250.0, 0.0, 1e-6])
         x0 = reactor.initial_state(
             L=1.0,
