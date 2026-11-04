@@ -13,16 +13,35 @@ from __future__ import annotations
 
 __version__ = "0.1.0"
 
-from .parameters import WoParameters, default_parameters
+from .parameters import WoParameters, default_parameters, open_loop_parameters, closed_loop_parameters
 from .kinetics import log_rate_constants, mass_rates, reaction_heat
 from .reactor import OpenLoopReactor
+from .fouling import FoulingReactor, dynmodel_fouling
+from .tube import TubeSimulator, tubo_fouling
+from .steady_state import solve_open_loop_ss, solve_closed_loop_ss
+from .controllers import DiscretePID, relay_autotune, tyreus_luyben_pid, amigo_pid
+from .closed_loop import ClosedLoopSimulator, ClosedLoopConfig
 
 __all__ = [
     "WoParameters",
     "default_parameters",
+    "open_loop_parameters",
+    "closed_loop_parameters",
     "log_rate_constants",
     "mass_rates",
     "reaction_heat",
     "OpenLoopReactor",
+    "FoulingReactor",
+    "dynmodel_fouling",
+    "TubeSimulator",
+    "tubo_fouling",
+    "solve_open_loop_ss",
+    "solve_closed_loop_ss",
+    "DiscretePID",
+    "relay_autotune",
+    "tyreus_luyben_pid",
+    "amigo_pid",
+    "ClosedLoopSimulator",
+    "ClosedLoopConfig",
     "__version__",
 ]
